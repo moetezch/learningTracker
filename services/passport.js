@@ -31,8 +31,8 @@ passport.use(
       }
       const user = await new User({
         "google.id": profile.id,
-        "google.name": profile._json.displayName,
-        "google.profileImage": profile._json.image.url
+        "name": profile._json.displayName,
+        "profileImage": profile._json.image.url
       })
         .save();
       done(null, user);

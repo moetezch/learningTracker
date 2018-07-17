@@ -1,43 +1,69 @@
 import React, { Component } from "react"
-import { Link,NavLink } from "react-router-dom"
-import { Navbar } from 'react-bulma-components'
+import { connect } from "react-redux"
+import * as actions from '../actions'
+import { Link, NavLink } from "react-router-dom"
+import { Navbar} from 'react-bulma-components'
 import image from "../images/icon-web_dev.png"
 
 class Header extends Component {
 
   renderContent() {
-console.log(this.props.auth);
-
     switch (this.props.auth) {
       case null:
         return
-      case undefined:
-        return <Navbar.Item href="#">Login</Navbar.Item>  
+      case false:
+        return (
+          <Navbar.Container position="end" >
+          <NavLink className="navbar-item " to="/features" >Features</NavLink>
+          <NavLink className="navbar-item" to="/pricing" >Pricing</NavLink>
+          <NavLink className="navbar-item" to="/about" >About</NavLink>
+          <NavLink className="navbar-item" to="/login" ><button className="button is-primary">Sign Up</button> </NavLink>
+          </Navbar.Container>
+        )
       default:
-        return <Navbar.Item href="#" key="1">Logged IN</Navbar.Item>
+        return (
+          <Navbar.Container position="end" >
+          <Navbar.Item dropdown hoverable>
+            <Navbar.Link>
+              <figure className="image is-32x32" style={{ "marginRight": ".5em"}}>
+                <img src={this.props.auth.profileImage}  style={{"borderRadius":"50%","maxHeight":"2em "}}/>
+              </figure>
+              {this.props.auth.name}
+            </Navbar.Link>
+            <Navbar.Dropdown boxed>
+              <Navbar.Item href="/api/logout">
+                <span className="icon is-small">
+                  <i className="fa fa-power-off" style={{ marginRight: '1em'}}></i>
+                </span>
+                Logout
+        </Navbar.Item>
+            </Navbar.Dropdown>
+          </Navbar.Item>
+          </Navbar.Container>
+        )
     }
   }
   render() {
     return (
 
-        <Navbar color="light">
+      <Navbar color="info">
         <Navbar.Brand >
           <Link to={this.props.auth ? "/dashboard" : "/"} className="navbar-item">
             <img
               src={image}
               alt=""
-              width="150"
+              width="100"
               height="64"
             />
           </Link>
           <Navbar.Burger />
         </Navbar.Brand>
         <Navbar.Menu>
-        <Navbar.Container position="end" >
-        {this.renderContent()}
-        </Navbar.Container>
+
+            {this.renderContent()}
+
         </Navbar.Menu>
-        </Navbar>
+      </Navbar>
 
     )
   }
@@ -45,5 +71,8 @@ console.log(this.props.auth);
 
 
 
-export default Header
+function mapStateToProps({ auth }) {
+  return { auth }
+}
 
+export default connect(mapStateToProps, actions)(Header)

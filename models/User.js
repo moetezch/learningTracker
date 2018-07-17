@@ -4,15 +4,15 @@ const { Schema } = mongoose
 const userSchema = new Schema({
 	google: {
 		id: String,
-		name:String,
-		profileImage:String
 	},
 	github: {
 		id: String
 	},
 	twitter: {
 		id: String,
-	}
+	},
+	name:String,
+	profileImage:String
 })
 
 mongoose.model('users', userSchema)
