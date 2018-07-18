@@ -9,6 +9,7 @@ import registerServiceWorker from './registerServiceWorker'
 import storage from 'redux-persist/lib/storage'
 import { PersistGate } from 'redux-persist/integration/react'
 import reducers from './reducers'
+import './style.css'
 
 const persistConfig = {
   key: 'root',

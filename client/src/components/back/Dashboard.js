@@ -2,8 +2,9 @@ import React from 'react'
 
 const Dashboard = () => {
   return (
-    <div>
+    <div className="container" style={{marginLeft:'20rem'}}>
     Dashboard
+    
     </div>
   )
 }

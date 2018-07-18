@@ -22,11 +22,5 @@ app.use(passport.session())
 require("./routes/authRoutes")(app)
 
 
-app.get('/',(req,res)=>{
-  res.send('hi')
-})
-app.get('/dashboard',(req,res)=>{
-  res.send('dashboard')
-})
 const PORT=process.env.PORT|| 5000
 app.listen(PORT)

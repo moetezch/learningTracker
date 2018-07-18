@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { OpenModal, Section, Modal, Media, Image, Content, Button, Level } from 'react-bulma-components'
 
 
 
