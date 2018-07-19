@@ -18,7 +18,7 @@
 .navbar-burger span{background-color:#00d1b2}
 .navbar-link figure img{border-radius:50%;max-height:2em}
 .breadcrumb:not(:last-child){margin-bottom:0}
-.aside{background:#2e363f;padding:2em .2em 0 1em;height: 100%;}
+.aside{background:#2e363f;padding:2em .2em 0 1em;}
 .aside a{color:#afb8c3}
 .aside .menu-list li{margin-top:.5em}
 .main{padding:2em 1em 0}

@@ -9,6 +9,7 @@ import registerServiceWorker from './registerServiceWorker'
 import storage from 'redux-persist/lib/storage'
 import { PersistGate } from 'redux-persist/integration/react'
 import reducers from './reducers'
+import '../node_modules/bulma/css/bulma.css'
 import './style.css'
 
 const persistConfig = {

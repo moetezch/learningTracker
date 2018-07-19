@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import * as actions from '../actions'
 import { Link, NavLink } from "react-router-dom"
 import { Navbar } from 'react-bulma-components'
-import image from "../images/icon-web_dev.png"
+import image from "../images/White_pencil.png"
 
 class Header extends Component {
 
@@ -43,64 +43,25 @@ class Header extends Component {
         )
     }
   }
-  renderSidenav() {
-    switch (this.props.auth) {
-      case null:
-        return
-      case false:
-        return
-      default:
-        return (
-          <div className="">
-            <div className="">
-              <aside className="column is-2 aside">
-                <nav className="menu">
-                  <p className="menu-label">General</p>
-                  <ul className="menu-list">
-                    <li><a href="#"><span className="icon is-small"><i className="fa fa-tachometer-alt"></i></span> Dashboard</a></li>
-                  </ul>
-                  <p className="menu-label">Administration</p>
-                  <ul className="menu-list">
-                    <li><a href="#"><span className="icon is-small"><i className="fa fa-pen-square "></i></span> Live Session</a></li>
-                    <li><a href="#"><span className="icon is-small"><i className="fa fa-desktop"></i></span> All Sessions</a></li>
-                    <li><a href="#"><span className="icon is-small"><i className="fa fa-project-diagram"></i></span> Projects</a></li>
-                    <li><a href="#"><span className="icon is-small"><i className="fa fa-tags"></i></span> Categories</a></li>
-                    <li><a href="#"><span className="icon is-small"><i className="fa fa-flag"></i></span> Goals</a></li>
-                  </ul>
-                </nav>
-              </aside>
-            </div>
-          </div>
-        )
-    }
-  }
   render() {
     return (
       <div>
         <Navbar>
           <Navbar.Brand >
             <Link to={this.props.auth ? "/dashboard" : "/"} className="navbar-item">
-              <img
-                src={image}
-                alt=""
-                width="100"
-                height="64"
-              />
+            Learning Tracker
             </Link>
             <Navbar.Burger />
           </Navbar.Brand>
           <Navbar.Menu>
-
             {this.renderNavbarItems()}
-
           </Navbar.Menu>
         </Navbar>
-        {this.renderSidenav()}
+      
       </div>
     )
   }
 }
-
 
 
 function mapStateToProps({ auth }) {
