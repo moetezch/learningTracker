@@ -8,7 +8,7 @@ import Footer from './Footer'
 // front
 import Landing from './front/Landing'
 import Login from './front/Login'
-import About from './front/About'
+import Testimonials from './front/Testimonials'
 import Features from './front/Features'
 import Pricing from './front/Pricing'
 // Back
@@ -17,8 +17,12 @@ import LiveSession from './back/LiveSession'
 import Projects from './back/Projects'
 import Goals from './back/Goals'
 import AllSessions from './back/AllSessions'
-import AddSession from './back/AddSession'
-import Categories from './back/Categories';
+import Categories from './back/Categories'
+import AddSession from './back/add/AddSession'
+import AddProject from './back/add/AddProject'
+import AddCategory from './back/add/AddCategory'
+import AddGoal from './back/add/AddGoal'
+import Faq from './front/Faq.js'
 
 class App extends Component {
   
@@ -51,15 +55,19 @@ class App extends Component {
         <Route exact path="/" component={Landing}/>
         <Route path="/dashboard" component={Dashboard}/>
         <Route path="/login" component={Login}/>
-        <Route path="/about" component={About}/>
+        <Route path="/testimonials" component={Testimonials}/>
         <Route path="/features" component={Features}/>
         <Route path="/pricing" component={Pricing}/>
+        <Route path="/faq" component={Faq}/>
         <Route exact path="/sessions" component={AllSessions}/>
         <Route path="/sessions/live" component={LiveSession}/>
+        <Route exact path="/projects" component={Projects}/>
+        <Route exact path="/categories" component={Categories}/>
+        <Route exact path="/goals" component={Goals}/>
         <Route path="/sessions/new" component={AddSession}/>
-        <Route path="/projects" component={Projects}/>
-        <Route path="/categories" component={Categories}/>
-        <Route path="/goals" component={Goals}/>
+        <Route path="/goals/new" component={AddGoal}/>
+        <Route path="/categories/new" component={AddCategory}/>
+        <Route path="/projects/new" component={AddProject}/>
         <Footer/>
       </div>
     </BrowserRouter>

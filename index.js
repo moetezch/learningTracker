@@ -3,14 +3,16 @@ const passport=require('passport')
 const mongoose=require('mongoose')
 const coookieSession=require('cookie-session')
 const keys=require('./config/keys')
+const bodyParser = require('body-parser')
 
 require('./models/User')
+require('./models/Category')
 require('./services/passport')
 
 mongoose.Promise=global.Promise
 mongoose.connect(keys.mongoURI, { useNewUrlParser: true })
 const app=express()
-
+app.use(bodyParser.json())
 app.use(coookieSession({
   maxAge:30 *24 *60 *60 *1000,
   keys:[keys.cookieKey]
@@ -20,6 +22,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 require("./routes/authRoutes")(app)
+require("./routes/sessionRoutes")(app)
 
 if (process.env.NODE_ENV==='production') {
   app.use(express.static('client/build'))

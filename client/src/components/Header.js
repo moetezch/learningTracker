@@ -16,7 +16,8 @@ class Header extends Component {
           <Navbar.Container position="end" >
             <NavLink className="navbar-item " to="/features" >Features</NavLink>
             <NavLink className="navbar-item" to="/pricing" >Pricing</NavLink>
-            <NavLink className="navbar-item" to="/about" >About</NavLink>
+            <NavLink className="navbar-item" to="/testimonials" >Testimonials</NavLink>
+            <NavLink className="navbar-item" to="/faq" >FAQ</NavLink>
             <NavLink className="navbar-item" to="/login" ><button className="button is-primary">Sign Up</button> </NavLink>
           </Navbar.Container>
         )
