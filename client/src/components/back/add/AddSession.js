@@ -1,15 +1,186 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { reduxForm, Field } from 'redux-form'
 import Sidenav from '../Sidenav'
+import { addSession } from '../../../actions/index'
+import validate from '../../../utils/validateSession'
 
-const AddSession = () => {
-  return (
-    <div className="columns">
-    <Sidenav/>
-    <section className="column">
-    AddSession
-    </section>
-    </div>
-  )
+const greaterThan = otherField => (value, previousValue, allValues) =>
+  parseFloat(value) > parseFloat(allValues[otherField]) ? value : previousValue
+
+const MnSecNormalizer =( otherField,otherField2) => (value, previousValue, allValues) => {
+  return parseFloat(value) > parseFloat(allValues[otherField])
+   &&  parseFloat(value) < parseFloat(allValues[otherField2]) ? value : previousValue
 }
 
-export default AddSession
+  
+
+const renderInput = ({ input, label, type, meta: { touched, error }, ...custom }) => (
+
+  <div className="field">
+    <label className="label">{label}</label>
+    <div className="control">
+      <input {...input} type={type} style={{ marginBottom: "5px" }} className="input" />
+      <div className="has-text-danger" style={{ marginBottom: "20px" }}>
+        {touched && error && <span>{error}</span>}
+      </div>
+    </div>
+  </div>
+)
+
+const renderTextarea = ({ textarea, label, meta: { touched, error }, ...custom }) => (
+
+  <div className="field">
+    <label className="label">{label}</label>
+    <div className="control">
+      <textarea {...textarea} style={{ marginBottom: "5px" }} className="textarea" />
+      <div className="has-text-danger" style={{ marginBottom: "20px" }}>
+        {touched && error && <span>{error}</span>}
+      </div>
+    </div>
+  </div>
+)
+
+class AddSession extends Component {
+  onSubmit = (session) => {
+    console.log(session);
+
+    // this.props.addSession(session)
+  }
+
+
+  render() {
+    const { handleSubmit, pristine, reset, submitting } = this.props
+
+    return (
+      <div className="columns">
+        <Sidenav />
+        <section className="column container">
+          <h2 className="is-size-2">Add Session</h2>
+          <form onSubmit={handleSubmit(this.onSubmit)}>
+
+            <Field
+              name="name"
+              type="text"
+              component={renderInput}
+              label="Name"
+            >
+            </Field>
+            <Field
+              name="note"
+              type="text"
+              component={renderTextarea}
+              label="Notes"
+            >
+            </Field>
+            <Field
+              name="date"
+              type="date"
+              component={renderInput}
+              label="Date"
+            >
+            </Field>
+            <Field
+              name="startTime"
+              type="time"
+              component={renderInput}
+              label="Start"
+            >
+            </Field>
+            <label className="label">Duration</label>
+            <div className="field is-grouped">
+
+              <Field
+                name="durationHours"
+                type="number"
+                component={renderInput}
+                label="H"
+                normalize={greaterThan('min')}
+              >
+              </Field>
+              <Field
+                name="durationMinutes"
+                type="number"
+                component={renderInput}
+                label="M"
+                normalize={MnSecNormalizer('min','max')}
+              >
+              </Field>
+              <Field
+                name="durationSeconds"
+                type="number"
+                component={renderInput}
+                label="S"
+                normalize={MnSecNormalizer('min','max')}
+              >
+              </Field>
+            </div>
+            <label className="label">Pause</label>
+            <div className="field is-grouped">
+
+              <Field
+                name="pauseHours"
+                type="number"
+                component={renderInput}
+                label="H"
+                normalize={greaterThan('min')}
+              >
+              </Field>
+              <Field
+                name="pauseMinutes"
+                type="number"
+                component={renderInput}
+                label="M"
+                normalize={MnSecNormalizer('min','max')}
+              >
+              </Field>
+              <Field
+                name="pauseSeconds"
+                type="number"
+                component={renderInput}
+                label="S"
+                normalize={MnSecNormalizer('min','max')}
+              >
+              </Field>
+            </div>
+            <Field
+              name="categories"
+              type="text"
+              component={renderInput}
+              label="Categories"
+            >
+            </Field>
+            <Field
+              name="projects"
+              type="text"
+              component={renderInput}
+              label="Project"
+            >
+
+            </Field>
+
+            <div>
+              <button className="button" type="submit" >Save</button>
+              <button className="button" disabled={pristine || submitting} onClick={reset}>
+                Clear Values
+            </button>
+            </div>
+          </form>
+        </section>
+      </div>
+    )
+  }
+}
+const mapStateToProps = ({ auth }) => ({
+  auth
+})
+const mapDispatchToProps = (dispatch) => ({
+  addSession: (session) => dispatch(addSession(session))
+});
+AddSession = connect(mapStateToProps, mapDispatchToProps)(AddSession)
+
+export default reduxForm({
+  form: 'sessionForm',
+  validate,
+  initialValues: { min: '-1', max: '60' }
+})(AddSession)

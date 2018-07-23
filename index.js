@@ -6,7 +6,9 @@ const keys=require('./config/keys')
 const bodyParser = require('body-parser')
 
 require('./models/User')
+require('./models/Session')
 require('./models/Category')
+require('./models/Project')
 require('./services/passport')
 
 mongoose.Promise=global.Promise

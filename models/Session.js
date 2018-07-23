@@ -6,7 +6,7 @@ const sessionSchema = new Schema({
   note:String,
   date:Date,
   startTime:Date,
-  endTime:Date,
+  duration:Date,
   pause:Date,
   categories: [{ type: Schema.Types.ObjectId, ref: 'Category'}],
   project: [{ type: Schema.Types.ObjectId, ref: 'Project'}],

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { reduxForm, Field } from 'redux-form'
 import Sidenav from '../Sidenav'
 import { addCategory } from '../../../actions/index'
-import validate from '../../../utils/validateCategory'
+import validate from '../../../utils/validateName'
 const renderField = ({ input, label, type, meta: { touched, error }, ...custom }) => (
 
   <div className="field">
