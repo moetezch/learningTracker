@@ -4,23 +4,25 @@ import { reduxForm, Field } from 'redux-form'
 import Sidenav from '../Sidenav'
 import { addSession } from '../../../actions/index'
 import validate from '../../../utils/validateSession'
+import { Select, Control, Label, Input, Textarea } from 'react-bulma-components'
+import CheckboxGroup from './form/CheckboxGroup'
 
 const greaterThan = otherField => (value, previousValue, allValues) =>
   parseFloat(value) > parseFloat(allValues[otherField]) ? value : previousValue
 
-const MnSecNormalizer =( otherField,otherField2) => (value, previousValue, allValues) => {
+const MnSecNormalizer = (otherField, otherField2) => (value, previousValue, allValues) => {
   return parseFloat(value) > parseFloat(allValues[otherField])
-   &&  parseFloat(value) < parseFloat(allValues[otherField2]) ? value : previousValue
+    && parseFloat(value) < parseFloat(allValues[otherField2]) ? value : previousValue
 }
 
-  
+
 
 const renderInput = ({ input, label, type, meta: { touched, error }, ...custom }) => (
 
   <div className="field">
     <label className="label">{label}</label>
     <div className="control">
-      <input {...input} type={type} style={{ marginBottom: "5px" }} className="input" />
+      <input {...input} type={type} style={{ marginBottom: "5px" }} className="input" {...custom} />
       <div className="has-text-danger" style={{ marginBottom: "20px" }}>
         {touched && error && <span>{error}</span>}
       </div>
@@ -28,12 +30,13 @@ const renderInput = ({ input, label, type, meta: { touched, error }, ...custom }
   </div>
 )
 
-const renderTextarea = ({ textarea, label, meta: { touched, error }, ...custom }) => (
+const renderTextarea = ({ input, label, type, meta: { touched, error }, ...custom }) => (
+
 
   <div className="field">
     <label className="label">{label}</label>
     <div className="control">
-      <textarea {...textarea} style={{ marginBottom: "5px" }} className="textarea" />
+      <textarea {...input} type={type} className="textarea" />
       <div className="has-text-danger" style={{ marginBottom: "20px" }}>
         {touched && error && <span>{error}</span>}
       </div>
@@ -41,7 +44,36 @@ const renderTextarea = ({ textarea, label, meta: { touched, error }, ...custom }
   </div>
 )
 
+const renderProject = ({ input, type, label, meta: { touched, error }, ...custom }) => (
+
+  <div className="field">
+    <label className="label">{label}</label>
+    <div className="select">
+      <select  {...input} {...custom} />
+      <div className="has-text-danger" style={{ marginBottom: "20px" }}>
+        {touched && error && <span>{error}</span>}
+      </div>
+    </div>
+  </div>
+)
+
+
 class AddSession extends Component {
+  componentDidMount() {
+    console.log(this.props);
+
+  }
+  renderCategories() {
+    return this.props.categories.map((category) => {
+      return ({ value: category._id, label: category.name })
+    })
+  }
+  renderProjects() {
+    return this.props.projects.map((project) => {
+      return (<option value={project._id}>{project.name}</option>)
+    })
+  }
+
   onSubmit = (session) => {
     console.log(session);
 
@@ -68,7 +100,7 @@ class AddSession extends Component {
             </Field>
             <Field
               name="note"
-              type="text"
+              // type="text"
               component={renderTextarea}
               label="Notes"
             >
@@ -103,7 +135,7 @@ class AddSession extends Component {
                 type="number"
                 component={renderInput}
                 label="M"
-                normalize={MnSecNormalizer('min','max')}
+                normalize={MnSecNormalizer('min', 'max')}
               >
               </Field>
               <Field
@@ -111,7 +143,7 @@ class AddSession extends Component {
                 type="number"
                 component={renderInput}
                 label="S"
-                normalize={MnSecNormalizer('min','max')}
+                normalize={MnSecNormalizer('min', 'max')}
               >
               </Field>
             </div>
@@ -131,7 +163,7 @@ class AddSession extends Component {
                 type="number"
                 component={renderInput}
                 label="M"
-                normalize={MnSecNormalizer('min','max')}
+                normalize={MnSecNormalizer('min', 'max')}
               >
               </Field>
               <Field
@@ -139,24 +171,22 @@ class AddSession extends Component {
                 type="number"
                 component={renderInput}
                 label="S"
-                normalize={MnSecNormalizer('min','max')}
+                normalize={MnSecNormalizer('min', 'max')}
               >
               </Field>
             </div>
+            <label className="label">Categories</label>
+            <CheckboxGroup name="categories" options={this.renderCategories()} />
+
+
             <Field
-              name="categories"
-              type="text"
-              component={renderInput}
-              label="Categories"
-            >
-            </Field>
-            <Field
-              name="projects"
-              type="text"
-              component={renderInput}
+              name="project"
+              type="select"
+              component={renderProject}
               label="Project"
             >
-
+               <option />
+               {this.renderProjects()}
             </Field>
 
             <div>
@@ -167,12 +197,13 @@ class AddSession extends Component {
             </div>
           </form>
         </section>
+
       </div>
     )
   }
 }
-const mapStateToProps = ({ auth }) => ({
-  auth
+const mapStateToProps = ({ auth, categories,projects }) => ({
+  auth, categories,projects
 })
 const mapDispatchToProps = (dispatch) => ({
   addSession: (session) => dispatch(addSession(session))

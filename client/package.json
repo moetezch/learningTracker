@@ -13,6 +13,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "bulma": "^0.7.1",
+    "bulma-extensions": "^2.2.1",
     "react": "^16.4.1",
     "react-bulma-components": "^1.5.0",
     "react-dom": "^16.4.1",

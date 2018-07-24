@@ -10,6 +10,7 @@ import storage from 'redux-persist/lib/storage'
 import { PersistGate } from 'redux-persist/integration/react'
 import reducers from './reducers'
 import '../node_modules/bulma/css/bulma.css'
+import '../node_modules/bulma-extensions/bulma-checkradio/dist/css/bulma-checkradio.min.css'
 import './style.css'
 
 const persistConfig = {
